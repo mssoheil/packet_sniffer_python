@@ -12,14 +12,18 @@ def main():
 
         # only capture first 4 packets and filter only icmp(for e.g. ping packets)
         result = sniff(count = 4, filter = "icmp")
-        print(result.show())
+        # print(result.show())
+
 
         while True:
             rawData, addr = snifferSocket.recvfrom(65535)
             packet = Ether(rawData)
             # summary of packets
-            print(packet.summary())
-            print(addr)
+            # print(packet.summary())
+            # print(addr)
+            # continuance sniffing
+            result = sniff(iface = interface, filter = "icmp")
+            print(result.summary())
             
     except KeyboardInterrupt:
         snifferSocket.close()
