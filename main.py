@@ -12,8 +12,12 @@ def main():
         while True:
             rawData, addr = snifferSocket.recvfrom(65535)
             packet = Ether(rawData)
+            # summary of packets
             print(packet.summary())
             print(addr)
+            # only capture first 10 packets and filter only icmp(for e.g. ping packets)
+            result = sniff(count = 10, filter = "icmp")
+            print(result.show())
             
     except KeyboardInterrupt:
         snifferSocket.close()
