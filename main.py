@@ -9,15 +9,17 @@ def main():
     snifferSocket.bind((interface, 0))
 
     try:
+
+        # only capture first 4 packets and filter only icmp(for e.g. ping packets)
+        result = sniff(count = 4, filter = "icmp")
+        print(result.show())
+
         while True:
             rawData, addr = snifferSocket.recvfrom(65535)
             packet = Ether(rawData)
             # summary of packets
             print(packet.summary())
             print(addr)
-            # only capture first 10 packets and filter only icmp(for e.g. ping packets)
-            result = sniff(count = 10, filter = "icmp")
-            print(result.show())
             
     except KeyboardInterrupt:
         snifferSocket.close()
